@@ -236,15 +236,16 @@
    (ocean-near-translucent? symbol                   :offset-assert 240)
    (ocean-far?              symbol                   :offset-assert 244)
    (mood-range              mood-range       :inline :offset-assert 256)
-   (max-rain                float                    :offset-assert 272)
-   (fog-mult                float                    :offset-assert 276)
-   (ocean-alpha             float                    :offset-assert 280)
-   (extra-sound-bank        pair                     :offset-assert 284)
+   (max-rain                float                    :offset-assert 280)
+   (fog-mult                float                    :offset-assert 284)
+   (ocean-alpha             float                    :offset-assert 288)
+   (extra-sound-bank        pair                     :offset-assert 292)
+   (max-snow                float                    :offset-assert 296)
    )
   :pack-me
   :method-count-assert 9
-  :size-assert         #x120
-  :flag-assert         #x900000120
+  :size-assert         #x12c
+  :flag-assert         #x90000012c
   )
 
 
