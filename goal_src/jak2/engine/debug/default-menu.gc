@@ -4419,6 +4419,7 @@
                   (-> *mood-control* display-flag)
                   )
                )
+			   ;; Clouds
              (float-var
                "Clouds"
                #f
@@ -4444,6 +4445,7 @@
                (new 'static 'bfloat :data 1.0)
                0
                )
+			   ;; Fog
              (float-var
                "Fog"
                #f
@@ -4469,7 +4471,34 @@
                (new 'static 'bfloat :data 1.0)
                0
                )
-             )
+			 ;; Snow
+             (float-var
+               "Snow"
+               #f
+               ,(lambda ((arg0 object) (arg1 debug-menu-msg) (arg2 float))
+                  (cond
+                    ((= arg1 (debug-menu-msg press))
+                     (if (and *mood-control* (nonzero? *mood-control*))
+                         (set! (-> *mood-control* overide snow) arg2)
+                         )
+                     )
+                    ((or (not *mood-control*) (zero? *mood-control*))
+                     0.0
+                     )
+                    (else
+                      (-> *mood-control* overide snow)
+                      )
+                    )
+                  )
+               1
+               (new 'static 'bfloat :data 0.00390625)
+               #t
+               0
+               (new 'static 'bfloat :data 1.0)
+               0
+               )
+			  )
+			 ;; Menu
            (menu
              "Colors"
              (flag "7am  sunrise" 0 dm-time-of-day-func)
