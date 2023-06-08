@@ -107,12 +107,13 @@
   ((data  float 2 :offset-assert   0)
    (cloud float   :offset          0)
    (fog   float   :offset          4)
+   (snow  float   :offset          8)
    )
   :pack-me
   :allow-misaligned
   :method-count-assert 9
-  :size-assert         #x8
-  :flag-assert         #x900000008
+  :size-assert         #xc
+  :flag-assert         #x90000000c
   )
 
 
@@ -120,11 +121,12 @@
   ((data  int32 2 :offset-assert   0)
    (cloud int32   :offset          0)
    (fog   int32   :offset          4)
+   (snow  int32   :offset          8)
    )
   :allow-misaligned
   :method-count-assert 9
-  :size-assert         #x8
-  :flag-assert         #x900000008
+  :size-assert         #xc
+  :flag-assert         #x90000000c
   )
 
 
@@ -134,11 +136,13 @@
    (max-cloud float     :offset          4)
    (min-fog   float     :offset          8)
    (max-fog   float     :offset         12)
+   (min-snow  float     :offset         16)
+   (max-snow  float     :offset         20)
    (quad      uint128   :offset          0)
    )
   :method-count-assert 9
-  :size-assert         #x10
-  :flag-assert         #x900000010
+  :size-assert         #x18
+  :flag-assert         #x900000018
   )
 
 
@@ -211,53 +215,53 @@ when updating the mood.  This means that an individual state structure must be l
 
 (deftype mood-control-work (structure)
   ((weather        mood-weather  :inline :offset-assert   0)
-   (iweather       mood-iweather :inline :offset-assert   8)
-   (interp         mood-weather  :inline :offset-assert  16)
-   (index          int32         4       :offset-assert  24)
-   (color-interp   float                 :offset-assert  40)
-   (color-index    int32         2       :offset-assert  44)
-   (channel-interp float                 :offset-assert  52)
-   (channel-index  int32         2       :offset-assert  56)
-   (cloud-interp   float                 :offset-assert  64)
-   (cloud-index    int32         2       :offset-assert  68)
+   (iweather       mood-iweather :inline :offset-assert  12)
+   (interp         mood-weather  :inline :offset-assert  24)
+   (index          int32         4       :offset-assert  36)
+   (color-interp   float                 :offset-assert  52)
+   (color-index    int32         2       :offset-assert  56)
+   (channel-interp float                 :offset-assert  64)
+   (channel-index  int32         2       :offset-assert  68)
+   (cloud-interp   float                 :offset-assert  76)
+   (cloud-index    int32         2       :offset-assert  80)
    )
   :method-count-assert 9
-  :size-assert         #x4c
-  :flag-assert         #x90000004c
+  :size-assert         #x58
+  :flag-assert         #x900000058
   )
 
 
 (deftype mood-control (mood-table)
   ((mood-clouds           mood-clouds                :offset-assert  28)
    (current-interp        mood-weather       :inline :offset-assert  32)
-   (target-interp         mood-weather       :inline :offset-assert  40)
-   (speed-interp          mood-weather       :inline :offset-assert  48)
-   (range                 mood-range         :inline :offset-assert  64)
-   (time-until-random     mood-weather       :inline :offset-assert  80)
-   (time-until-random-min mood-weather       :inline :offset-assert  88)
-   (time-until-random-max mood-weather       :inline :offset-assert  96)
-   (display-flag          symbol                     :offset-assert 104)
-   (overide-weather-flag  symbol                     :offset-assert 108)
-   (overide               mood-weather       :inline :offset-assert 112)
-   (lightning-index       int32                      :offset-assert 120)
-   (lightning-val         int32                      :offset-assert 124)
-   (lightning-time        int32                      :offset-assert 128)
-   (lightning-time2       float                      :offset-assert 132)
-   (lightning-flash       float                      :offset-assert 136)
-   (lightning-id          sound-id                   :offset-assert 140)
-   (lightning-count0      uint32                     :offset-assert 144)
-   (lightning-count1      uint32                     :offset-assert 148)
-   (lightning-count2      uint32                     :offset-assert 152)
-   (rain-id               uint32                     :offset-assert 156)
-   (sound-pitch           float                      :offset-assert 160)
-   (fogs                  mood-fog-table     9       :offset-assert 164)
-   (colors                mood-color-table   3       :offset-assert 200)
-   (channels              mood-channel-group 3       :offset-assert 212)
-   (clouds                mood-clouds        9       :offset-assert 224)
+   (target-interp         mood-weather       :inline :offset-assert  44)
+   (speed-interp          mood-weather       :inline :offset-assert  56)
+   (range                 mood-range         :inline :offset-assert  80)
+   (time-until-random     mood-weather       :inline :offset-assert  104)
+   (time-until-random-min mood-weather       :inline :offset-assert  116)
+   (time-until-random-max mood-weather       :inline :offset-assert  128)
+   (display-flag          symbol                     :offset-assert 140)
+   (overide-weather-flag  symbol                     :offset-assert 144)
+   (overide               mood-weather       :inline :offset-assert 148)
+   (lightning-index       int32                      :offset-assert 160)
+   (lightning-val         int32                      :offset-assert 164)
+   (lightning-time        int32                      :offset-assert 168)
+   (lightning-time2       float                      :offset-assert 172)
+   (lightning-flash       float                      :offset-assert 176)
+   (lightning-id          sound-id                   :offset-assert 180)
+   (lightning-count0      uint32                     :offset-assert 184)
+   (lightning-count1      uint32                     :offset-assert 188)
+   (lightning-count2      uint32                     :offset-assert 192)
+   (rain-id               uint32                     :offset-assert 196)
+   (sound-pitch           float                      :offset-assert 200)
+   (fogs                  mood-fog-table     9       :offset-assert 204)
+   (colors                mood-color-table   3       :offset-assert 240)
+   (channels              mood-channel-group 3       :offset-assert 252)
+   (clouds                mood-clouds        9       :offset-assert 264)
    )
   :method-count-assert 19
-  :size-assert         #x104
-  :flag-assert         #x1300000104
+  :size-assert         #x12c
+  :flag-assert         #x130000012c
   (:methods
     (init-weather! (_type_) none :behavior process 9)
     (update-mood-weather! (_type_ float float float float) none 10)
