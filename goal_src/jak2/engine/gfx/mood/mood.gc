@@ -1229,6 +1229,15 @@ Returns the current value of `lightning-id`"
                   (set! (-> obj target-interp fog) 0.5)
                   (set! (-> obj time-until-random fog) (-> obj time-until-random cloud))
                   )
+				  ;; snow start
+                (set! (-> obj speed-interp snow) (rand-vu-float-range 30.0 120.0))
+                (when (and (< 0.0 (-> *setting-control* user-current snow))
+                           (< (-> obj target-interp snow) 0.5)
+                           (< 0.25 (-> obj target-interp snow))
+                           (or (< (-> obj target-interp snow) 0.25) (< 0.75 (-> obj target-interp snow)))
+                           )
+                  (set! (-> obj target-interp snow) 0.5)
+                  ) ;; snow end
                 )
               )
             (when (!= (-> obj time-until-random fog) -99.0)
@@ -1260,7 +1269,13 @@ Returns the current value of `lightning-id`"
                            (-> obj current-interp fog)
                            )
                        )
+                (f22-2 (if (and (-> obj overide-weather-flag) (not (movie?))) ;; added
+                           (-> obj overide snow)
+                           (-> obj current-interp snow)
+                           )
+                       )
                 (f28-2 (fmin (-> s5-0 info max-rain) (-> *time-of-day-context* max-rain)))
+                (f28-3 (fmin (-> s5-0 info max-snow) (-> *time-of-day-context* max-snow))) ;; added
                 )
             (set! (-> obj sound-pitch) (* 1.442695 (logf (-> *display* bg-clock clock-ratio))))
             (let* ((f0-114 (fmax 0.0 (fmin (* 4.0 (fmax 0.0 (+ -0.5 f26-2)) (fmax 0.0 (+ -0.5 f30-2))) f28-2)))
@@ -1311,13 +1326,19 @@ Returns the current value of `lightning-id`"
                     )
                   )
                 )
-              )
-            )
+			)
+            (let* ((f0-115 (fmax 0.0 (fmin (* 4.0 (fmax 0.0 (+ -0.5 f22-2))) f28-3)))
+                   (f22-2 (fmin 0.75 f0-115))
+                   )
+              (set! (-> *setting-control* user-default snow) f22-2)
+			)
+		)
           (when (-> obj display-flag)
             (cond
               ((and (-> obj overide-weather-flag) (not (movie?)))
-               (format *stdcon* "overide cloud ~f~%" (-> obj overide cloud))
-               (format *stdcon* "overide fog ~f~%" (-> obj overide fog))
+               (format *stdcon* "override cloud ~f~%" (-> obj overide cloud))
+               (format *stdcon* "override fog ~f~%" (-> obj overide fog))
+               (format *stdcon* "override snow ~f~%" (-> obj overide snow)) ;; added
                )
               (else
                 (format *stdcon* "time until random cloud ~f~%" (* 0.0033333334 (-> obj time-until-random cloud)))
