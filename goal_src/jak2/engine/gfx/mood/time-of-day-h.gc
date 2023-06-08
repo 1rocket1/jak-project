@@ -126,10 +126,11 @@
    (fog-mult             float                            :offset-assert 2088)
    (exterior-level       basic                            :offset-assert 2092)
    (ocean-alpha          float                            :offset-assert 2096)
+   (max-snow             float                            :offset-assert 2100)
    )
   :method-count-assert 9
-  :size-assert         #x834
-  :flag-assert         #x900000834
+  :size-assert         #x838
+  :flag-assert         #x900000838
   )
 
 
